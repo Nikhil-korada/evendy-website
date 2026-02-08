@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Evendy - Your Event Buddy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Work+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #D84315;
+            --primary-dark: #BF360C;
+            --primary-light: #FF6E40;
+            --secondary: #FFA726;
+            --accent: #FFD54F;
+            --bg-cream: #FFF8F0;
+            --bg-white: #FFFFFF;
+            --text-dark: #2C1810;
+            --text-medium: #5D4037;
+            --text-light: #8D6E63;
+            --border: #FFCCBC;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Work Sans', sans-serif;
+            color: var(--text-dark);
+            background: var(--bg-cream);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 {
+            font-family: 'DM Serif Display', serif;
+            font-weight: 400;
+        }
+
+        /* Decorative Elements */
+        .deco-circle {
+            position: absolute;
+            border-radius: 50%;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 1.2rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            border-bottom: 1px solid var(--border);
+            animation: slideDown 0.6s ease-out;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        .logo {
+            font-family: 'DM Serif Display', serif;
+            font-size: 2rem;
+            color: var(--primary);
+            font-style: italic;
+            letter-spacing: -0.5px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2.5rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-medium);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .cta-button {
+            background: var(--primary);
+            color: white;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(216, 67, 21, 0.2);
+        }
+
+        .cta-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(216, 67, 21, 0.3);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            padding: 8rem 5% 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: -20%;
+            width: 800px;
+            height: 800px;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.3;
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+
+        .hero-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero-text h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.2s backwards;
+        }
+
+        .hero-text .tagline {
+            font-size: 1.8rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-style: italic;
+            animation: fadeInUp 0.8s ease-out 0.4s backwards;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            color: var(--text-medium);
+            margin-bottom: 2.5rem;
+            animation: fadeInUp 0.8s ease-out 0.6s backwards;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1.5rem;
+            animation: fadeInUp 0.8s ease-out 0.8s backwards;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(216, 67, 21, 0.3);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 25px rgba(216, 67, 21, 0.4);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .hero-visual {
+            position: relative;
+            animation: fadeIn 1s ease-out 0.5s backwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .event-cards {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1.5rem;
+        }
+
+        .event-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            transition: all 0.3s;
+        }
+
+        .event-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0,0,0,0.12);
+        }
+
+        .event-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .event-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .event-card p {
+            color: var(--text-light);
+            font-size: 0.95rem;
+        }
+
+        /* Budget Section */
+        .budget-section {
+            padding: 6rem 5%;
+            background: white;
+            position: relative;
+        }
+
+        .section-header {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto 4rem;
+        }
+
+        .section-header .label {
+            font-size: 0.9rem;
+            color: var(--primary);
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .section-header h2 {
+            font-size: 3.5rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .section-header p {
+            font-size: 1.2rem;
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        .budget-tiers {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .tier-card {
+            background: linear-gradient(135deg, var(--bg-cream) 0%, white 100%);
+            padding: 2.5rem;
+            border-radius: 20px;
+            border: 2px solid var(--border);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tier-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transform: scaleX(0);
+            transition: transform 0.4s;
+        }
+
+        .tier-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            border-color: var(--primary);
+        }
+
+        .tier-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .tier-card h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .tier-card .price {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 1.5rem;
+        }
+
+        .tier-card ul {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .tier-card li {
+            padding: 0.5rem 0;
+            color: var(--text-medium);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tier-card li::before {
+            content: '✓';
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Services Section */
+        .services-section {
+            padding: 6rem 5%;
+            background: var(--bg-cream);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .service-item {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            transition: all 0.3s;
+            border: 1px solid var(--border);
+        }
+
+        .service-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        .service-item .emoji {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-item h3 {
+            font-size: 1.3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* How It Works */
+        .how-it-works {
+            padding: 6rem 5%;
+            background: white;
+        }
+
+        .steps-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+        }
+
+        .step {
+            text-align: center;
+            position: relative;
+        }
+
+        .step-number {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 0 auto 1.5rem;
+            box-shadow: 0 4px 15px rgba(216, 67, 21, 0.3);
+        }
+
+        .step h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .step p {
+            color: var(--text-medium);
+            line-height: 1.7;
+        }
+
+        /* Vendor Benefits */
+        .vendor-benefits {
+            padding: 6rem 5%;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: white;
+        }
+
+        .vendor-benefits .section-header h2,
+        .vendor-benefits .section-header .label {
+            color: white;
+        }
+
+        .vendor-benefits .section-header p {
+            color: rgba(255,255,255,0.9);
+        }
+
+        .benefits-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .benefit-card {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            padding: 2rem;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.3s;
+        }
+
+        .benefit-card:hover {
+            background: rgba(255,255,255,0.15);
+            transform: translateY(-5px);
+        }
+
+        .benefit-card .icon {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        /* App Coming Soon */
+        .app-section {
+            padding: 6rem 5%;
+            background: var(--bg-cream);
+            text-align: center;
+        }
+
+        .app-preview {
+            max-width: 800px;
+            margin: 3rem auto;
+            background: white;
+            padding: 3rem;
+            border-radius: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+        }
+
+        .app-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .app-feature {
+            padding: 1.5rem;
+        }
+
+        .app-feature .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .waitlist-form {
+            max-width: 500px;
+            margin: 2rem auto;
+            display: flex;
+            gap: 1rem;
+        }
+
+        .waitlist-form input {
+            flex: 1;
+            padding: 1rem 1.5rem;
+            border: 2px solid var(--border);
+            border-radius: 50px;
+            font-size: 1rem;
+            font-family: 'Work Sans', sans-serif;
+        }
+
+        .waitlist-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .waitlist-form button {
+            padding: 1rem 2rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .waitlist-form button:hover {
+            background: var(--primary-dark);
+        }
+
+        /* Footer */
+        footer {
+            background: var(--text-dark);
+            color: white;
+            padding: 4rem 5% 2rem;
+        }
+
+        .footer-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 3rem;
+        }
+
+        .footer-brand h3 {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            font-style: italic;
+            color: var(--accent);
+        }
+
+        .footer-brand p {
+            color: rgba(255,255,255,0.7);
+            line-height: 1.7;
+        }
+
+        .footer-links h4 {
+            margin-bottom: 1rem;
+            color: var(--accent);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem 0;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.5);
+        }
+
+        /* Responsive */
+        @media (max-width: 968px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-text h1 {
+                font-size: 3.5rem;
+            }
+
+            .hero-buttons {
+                justify-content: center;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .footer-content {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header h2 {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .hero-text h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero-text .tagline {
+                font-size: 1.3rem;
+            }
+
+            .event-cards {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <div class="logo">Evendy</div>
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#budget">Budget Plans</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#how-it-works">How It Works</a></li>
+            <li><a href="#vendors">For Vendors</a></li>
+        </ul>
+        <a href="#vendor-register" class="cta-button">Vendor Registration</a>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-text">
+                <div class="tagline">Your Event Buddy</div>
+                <h1>Celebrate Every Moment, Responsibly</h1>
+                <p>India's first budget-intelligent event planning platform. From weddings to corporate events, we match you with perfect vendors within your budget—while promoting sustainable, zero-waste celebrations.</p>
+                <div class="hero-buttons">
+                    <a href="#budget" class="btn-primary">Explore Budget Plans</a>
+                    <a href="#how-it-works" class="btn-secondary">How It Works</a>
+                </div>
+            </div>
+            <div class="hero-visual">
+                <div class="event-cards">
+                    <div class="event-card" style="animation-delay: 0.3s;">
+                        <div class="icon">💒</div>
+                        <h3>Weddings</h3>
+                        <p>Your dream wedding, perfectly budgeted</p>
+                    </div>
+                    <div class="event-card" style="animation-delay: 0.5s;">
+                        <div class="icon">🎂</div>
+                        <h3>Birthdays</h3>
+                        <p>Memorable celebrations made easy</p>
+                    </div>
+                    <div class="event-card" style="animation-delay: 0.7s;">
+                        <div class="icon">🏢</div>
+                        <h3>Corporate</h3>
+                        <p>Professional events, flawlessly executed</p>
+                    </div>
+                    <div class="event-card" style="animation-delay: 0.9s;">
+                        <div class="icon">🎉</div>
+                        <h3>All Events</h3>
+                        <p>Every celebration deserves care</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Budget Section -->
+    <section class="budget-section" id="budget">
+        <div class="section-header">
+            <div class="label">Budget-First Planning</div>
+            <h2>Choose Your Budget, Find Perfect Matches</h2>
+            <p>Our revolutionary budget-based system ensures you only see vendors who work within your range. No more unrealistic quotes or wasted time.</p>
+        </div>
+        <div class="budget-tiers">
+            <div class="tier-card">
+                <h3>Essential</h3>
+                <div class="price">₹10L - ₹20L</div>
+                <ul>
+                    <li>Perfect for intimate gatherings</li>
+                    <li>Quality vendors within budget</li>
+                    <li>Full vendor support</li>
+                    <li>Digital planning tools</li>
+                </ul>
+            </div>
+            <div class="tier-card">
+                <h3>Premium</h3>
+                <div class="price">₹20L - ₹50L</div>
+                <ul>
+                    <li>Enhanced vendor selection</li>
+                    <li>Priority support</li>
+                    <li>Advanced planning features</li>
+                    <li>Sustainability focus</li>
+                </ul>
+            </div>
+            <div class="tier-card">
+                <h3>Luxury</h3>
+                <div class="price">₹50L - ₹1Cr</div>
+                <ul>
+                    <li>Premium vendor network</li>
+                    <li>Dedicated event coordinator</li>
+                    <li>Custom design solutions</li>
+                    <li>White-glove service</li>
+                </ul>
+            </div>
+            <div class="tier-card">
+                <h3>Bespoke</h3>
+                <div class="price">₹1Cr+</div>
+                <ul>
+                    <li>Fully personalized planning</li>
+                    <li>Hand-picked vendor curation</li>
+                    <li>In-person consultation</li>
+                    <li>Unlimited customization</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services-section" id="services">
+        <div class="section-header">
+            <div class="label">Complete Event Solutions</div>
+            <h2>Everything You Need, One Platform</h2>
+            <p>From photographers to caterers, decorators to venues—we've got every aspect of your event covered.</p>
+        </div>
+        <div class="services-grid">
+            <div class="service-item">
+                <div class="emoji">📸</div>
+                <h3>Photography</h3>
+            </div>
+            <div class="service-item">
+                <div class="emoji">💄</div>
+                <h3>Makeup Artists</h3>
+            </div>
+            <div class="service-item">
+                <div class="emoji">🌸</div>
+                <h3>Decoration</h3>
+            </div>
+            <div class="service-item">
+                <div class="emoji">🍽️</div>
+                <h3>Catering</h3>
+            </div>
+            <div class="service-item">
+                <div class="emoji">🏛️</div>
+                <h3>Venues</h3>
+            </div>
+            <div class="service-item">
+                <div class="emoji">🎭</div>
+                <h3>Entertainment</h3>
+            </div>
+            <div class="service-item">
+                <div class="emoji">👗</div>
+                <h3>Attire</h3>
+            </div>
+            <div class="service-item">
+                <div class="emoji">🪴</div>
+                <h3>Floristry</h3>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="how-it-works" id="how-it-works">
+        <div class="section-header">
+            <div class="label">Simple & Smart</div>
+            <h2>How Evendy Works</h2>
+            <p>Four simple steps to your perfect event</p>
+        </div>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Select Your Budget</h3>
+                <p>Choose the budget range that works for you. This ensures you only see relevant vendors.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Browse Vendors</h3>
+                <p>Discover pre-matched vendors who work within your budget range—no surprises.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Plan Together</h3>
+                <p>Use our tools to coordinate with vendors, track progress, and manage everything in one place.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">4</div>
+                <h3>Celebrate!</h3>
+                <p>Enjoy your perfectly planned event knowing every detail has been taken care of.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Vendor Benefits -->
+    <section class="vendor-benefits" id="vendors">
+        <div class="section-header">
+            <div class="label">Join Our Network</div>
+            <h2>Why Vendors Love Evendy</h2>
+            <p>Get matched with customers who truly fit your services and budget range</p>
+        </div>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="icon">🎯</div>
+                <h3>Budget-Matched Leads</h3>
+                <p>Only receive inquiries from customers in your price range—no more wasted time on mismatched leads.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">📈</div>
+                <h3>Grow Your Business</h3>
+                <p>Access a growing customer base actively planning events in your area and budget segment.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">✨</div>
+                <h3>Fair Opportunities</h3>
+                <p>Transparent platform rules ensure every vendor gets equal opportunity to showcase their work.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="icon">🤝</div>
+                <h3>Community Support</h3>
+                <p>Join a community of vendors committed to quality, sustainability, and customer satisfaction.</p>
+            </div>
+        </div>
+        <div style="text-align: center; margin-top: 3rem;">
+            <a href="#vendor-register" class="btn-primary" style="background: white; color: var(--primary);">Register as a Vendor</a>
+        </div>
+    </section>
+
+    <!-- App Coming Soon -->
+    <section class="app-section">
+        <div class="section-header">
+            <div class="label">Coming Soon</div>
+            <h2>The Evendy App is Almost Here</h2>
+            <p>Plan, coordinate, and celebrate—all from your mobile device</p>
+        </div>
+        <div class="app-preview">
+            <div class="app-features">
+                <div class="app-feature">
+                    <div class="icon">📱</div>
+                    <h3>Mobile-First</h3>
+                    <p>Plan on the go</p>
+                </div>
+                <div class="app-feature">
+                    <div class="icon">🤖</div>
+                    <h3>AI Assistant</h3>
+                    <p>Smart suggestions</p>
+                </div>
+                <div class="app-feature">
+                    <div class="icon">👨‍👩‍👧‍👦</div>
+                    <h3>Family Groups</h3>
+                    <p>Collaborate easily</p>
+                </div>
+                <div class="app-feature">
+                    <div class="icon">💚</div>
+                    <h3>Zero-Waste</h3>
+                    <p>Sustainable options</p>
+                </div>
+            </div>
+            <form class="waitlist-form" onsubmit="event.preventDefault(); alert('Thank you! We\'ll notify you when the app launches.');">
+                <input type="email" placeholder="Enter your email" required>
+                <button type="submit">Join Waitlist</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Vendor Registration Section -->
+    <section class="budget-section" id="vendor-register">
+        <div class="section-header">
+            <div class="label">Partner With Us</div>
+            <h2>Vendor Registration</h2>
+            <p>Join Evendy's network of trusted vendors and grow your business with quality, budget-matched leads</p>
+        </div>
+        <div style="max-width: 700px; margin: 0 auto; background: white; padding: 3rem; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.1);">
+            <form onsubmit="event.preventDefault(); alert('Thank you for registering! We\'ll review your application and get back to you soon.');">
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Business Name *</label>
+                    <input type="text" required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Work Sans', sans-serif; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Contact Number *</label>
+                    <input type="tel" required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Work Sans', sans-serif; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Email *</label>
+                    <input type="email" required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Work Sans', sans-serif; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Service Category *</label>
+                    <select required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Work Sans', sans-serif; font-size: 1rem;">
+                        <option value="">Select a category</option>
+                        <option>Photography & Videography</option>
+                        <option>Makeup & Beauty</option>
+                        <option>Decoration & Styling</option>
+                        <option>Catering</option>
+                        <option>Venue</option>
+                        <option>Entertainment</option>
+                        <option>Floristry</option>
+                        <option>Attire & Fashion</option>
+                        <option>Other Services</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Budget Range *</label>
+                    <select required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Work Sans', sans-serif; font-size: 1rem;">
+                        <option value="">Select your operating budget range</option>
+                        <option>₹10L - ₹20L</option>
+                        <option>₹20L - ₹50L</option>
+                        <option>₹50L - ₹1Cr</option>
+                        <option>₹1Cr+</option>
+                        <option>Multiple Ranges</option>
+                    </select>
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">City / Location *</label>
+                    <input type="text" required style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Work Sans', sans-serif; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Years of Experience *</label>
+                    <input type="number" required min="0" style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Work Sans', sans-serif; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; font-weight: 600; color: var(--text-dark);">Portfolio Link (Instagram/Website/Drive)</label>
+                    <input type="url" placeholder="https://" style="width: 100%; padding: 1rem; border: 2px solid var(--border); border-radius: 10px; font-family: 'Work Sans', sans-serif; font-size: 1rem;">
+                </div>
+                <div style="margin-bottom: 2rem;">
+                    <label style="display: flex; align-items: start; gap: 0.5rem; cursor: pointer;">
+                        <input type="checkbox" required style="margin-top: 0.3rem;">
+                        <span style="color: var(--text-medium); font-size: 0.9rem;">I agree to Evendy's vendor terms, quality standards, and commitment to sustainable event practices.</span>
+                    </label>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%; font-size: 1.1rem;">Submit Application</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <h3>Evendy</h3>
+                <p>Your trusted event buddy for celebrating life's special moments—responsibly, beautifully, and within budget.</p>
+            </div>
+            <div class="footer-links">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#budget">Budget Plans</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#how-it-works">How It Works</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>For Vendors</h4>
+                <ul>
+                    <li><a href="#vendor-register">Register</a></li>
+                    <li><a href="#vendors">Benefits</a></li>
+                    <li><a href="#">Vendor Portal</a></li>
+                    <li><a href="#">Guidelines</a></li>
+                </ul>
+            </div>
+            <div class="footer-links">
+                <h4>Company</h4>
+                <ul>
+                    <li><a href="#">About Us</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Contact</a></li>
+                    <li><a href="#">Careers</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 Evendy. Founded by Usha Panathala & Nikhil Korada. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll-triggered animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.tier-card, .service-item, .benefit-card, .step').forEach(el => {
+            el.style.opacity = '0';
+            el.style.transform = 'translateY(30px)';
+            el.style.transition = 'all 0.6s ease-out';
+            observer.observe(el);
+        });
+    </script>
+</body>
+</html>
